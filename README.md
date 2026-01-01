@@ -19,7 +19,7 @@ npm install
 ## ⚙️ Configuration
 
 Configure your app by changing the values in code that start with `VAR_`.
-Add icons in the `public/assets` folder.
+Add icons in the `public/icons` folder.
 
 ## Start development
 

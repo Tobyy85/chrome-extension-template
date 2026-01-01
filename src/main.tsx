@@ -1,12 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { AppRouter } from '@/routes/router'
+import Popup from '@/Popup'
 
 import './styles/tailwind.css'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <AppRouter />
+        <Popup />
     </StrictMode>
 )

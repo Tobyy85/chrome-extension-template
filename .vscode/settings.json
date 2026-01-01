@@ -18,12 +18,6 @@
         // "**/tsconfig.node.json": true,
         // "**/vite-env.d.ts": true,
 
-        // Docker
-        // "**/Dockerfile*": true,
-        // "**/docker-compose*.yml": true,
-        // "**/.dockerignore": true,
-        // "**/nginx.conf": true,
-
         // Generated files and dependencies
         "**/package-lock.json": true,
         "**/node_modules": true,
@@ -31,6 +25,7 @@
     },
     // Formatting and Linting
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.eol": "\n",
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit",
         "source.sortImports": "explicit"

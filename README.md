@@ -32,5 +32,5 @@ npm run dev
 ## Build for production
 
 ```bash
-npm run dist
+npm run build
 ```

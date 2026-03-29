@@ -6,7 +6,7 @@ export default defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
         alias: {
-            '@': '/src',
+            '@': '/src', // eslint-disable-line @typescript-eslint/naming-convention
         },
     },
 })

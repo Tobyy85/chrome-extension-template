@@ -1,18 +1,18 @@
 {
     "files.exclude": {
-        // Project configuration files
+        // // Project configuration files
         // "**/package.json": true,
         // "**/vite.config.ts": true,
         // "**/index.html": true,
         // "**/README.md": true,
 
-        // ESLint, Prettier, Git
+        // // ESLint, Prettier, Git
         // "**/eslint.config.js": true,
         // "**/.prettierrc": true,
         // "**/.prettierignore": true,
         // "**/.gitignore": true,
 
-        // TypeScript
+        // // TypeScript
         // "**/tsconfig.json": true,
         // "**/tsconfig.app.json": true,
         // "**/tsconfig.node.json": true,
@@ -31,6 +31,7 @@
         "source.sortImports": "explicit"
     },
     "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+    // "eslint.workingDirectories": [{ "directory": "client", "changeProcessCWD": true }],
 
     // Imports
     "js/ts.updateImportsOnFileMove.enabled": "always",
@@ -46,6 +47,13 @@
 
     // Tailwind CSS
     "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.classFunctions": ["cn", "twMerge", "clsx"],
+    "tailwindCSS.experimental.classRegex": [
+        ["\\bvariants\\s*=\\s*\\{([\\s\\S]*?)\\}", "'([^']*)'"], // For variants as object
+        ["\\bsizes\\s*=\\s*\\{([\\s\\S]*?)\\}", "'([^']*)'"], // For sizes as object
+        ["\\bbaseStyles\\s*=\\s*'([^']*)'"], // For baseStyles as string
+        ["\\bbaseStyles\\s*=\\s*\\[([\\s\\S]*?)\\]", "'([^']*)'"] // For baseStyles as array
+    ],
     "editor.quickSuggestions": {
         "strings": true
     },

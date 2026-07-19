@@ -1,7 +1,7 @@
 /* eslint-disable max-lines, id-length, no-magic-numbers */
 
+import eslintReact from '@eslint-react/eslint-plugin'
 import js from '@eslint/js'
-import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
@@ -10,12 +10,8 @@ import tseslint from 'typescript-eslint'
 export default defineConfig([
     globalIgnores(['dist', 'node_modules']),
     {
-        files: ['**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}'],
-        extends: [
-            js.configs.recommended,
-            reactHooks.configs.flat['recommended-latest'],
-            reactRefresh.configs.vite,
-        ],
+        files: ['**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}'],
+        extends: [js.configs.recommended],
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,
@@ -152,8 +148,6 @@ export default defineConfig([
             'symbol-description': 'warn',
             'vars-on-top': 'warn',
             yoda: ['warn', 'never', { exceptRange: true }],
-
-            'react-hooks/set-state-in-effect': 'off',
         },
     },
     {
@@ -195,6 +189,10 @@ export default defineConfig([
                     format: ['camelCase', 'UPPER_CASE', 'PascalCase'], // allow PascalCase for React components
                 },
                 {
+                    selector: 'classProperty',
+                    format: ['camelCase', 'UPPER_CASE'],
+                },
+                {
                     selector: 'parameter',
                     format: ['camelCase'],
                     leadingUnderscore: 'allow',
@@ -204,10 +202,10 @@ export default defineConfig([
                     format: ['PascalCase'],
                 },
                 {
-                    selector: 'variable',
+                    selector: ['variable', 'classProperty'],
                     types: ['boolean'],
                     format: ['PascalCase'],
-                    prefix: ['is', 'should', 'has', 'can', 'did', 'will', 'are'],
+                    prefix: ['is', 'should', 'has', 'can', 'did', 'will', 'are', 'show'],
                 },
                 {
                     selector: ['variable', 'parameter'],
@@ -274,7 +272,7 @@ export default defineConfig([
             '@typescript-eslint/no-useless-constructor': 'warn',
 
             'no-throw-literal': 'off',
-            '@typescript-eslint/only-throw-error': 'warn',
+            '@typescript-eslint/only-throw-error': ['warn', { allow: ['Response'] }],
 
             'prefer-destructuring': 'off',
             '@typescript-eslint/prefer-destructuring': ['warn', { object: true, array: false }],
@@ -380,7 +378,6 @@ export default defineConfig([
             '@typescript-eslint/no-unnecessary-qualifier': 'warn',
             '@typescript-eslint/no-unnecessary-template-expression': 'warn',
             '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
-            '@typescript-eslint/no-unnecessary-type-arguments': 'off', // TODO: Enable this rule once newer version of TypeScript eslint plugin is released that fix the crash
             '@typescript-eslint/no-unnecessary-type-constraint': 'warn',
             '@typescript-eslint/no-unnecessary-type-conversion': 'warn',
             '@typescript-eslint/no-unnecessary-type-parameters': 'warn',
@@ -410,13 +407,6 @@ export default defineConfig([
             '@typescript-eslint/prefer-nullish-coalescing': 'warn',
             '@typescript-eslint/prefer-optional-chain': 'warn',
             '@typescript-eslint/prefer-readonly': 'warn',
-            '@typescript-eslint/prefer-readonly-parameter-types': [
-                'warn',
-                {
-                    ignoreInferredTypes: true,
-                    treatMethodsAsReadonly: true,
-                },
-            ],
             '@typescript-eslint/prefer-reduce-type-parameter': 'warn',
             '@typescript-eslint/prefer-regexp-exec': 'warn',
             '@typescript-eslint/prefer-return-this-type': 'warn',
@@ -435,16 +425,92 @@ export default defineConfig([
         },
     },
     {
-        files: ['**/*.{tsx,jsx}'],
+        files: ['**/*.{tsx,ts,jsx,js}'],
+        extends: [eslintReact.configs['recommended-typescript']],
         rules: {
-            'max-lines-per-function': ['warn', { max: 120, skipBlankLines: true, skipComments: true }], // JSX functions can be longer
+            '@eslint-react/error-boundaries': 'error',
+            '@eslint-react/exhaustive-deps': 'warn',
+            '@eslint-react/globals': 'error',
+            '@eslint-react/immutability': 'error',
+            '@eslint-react/no-access-state-in-setstate': 'warn',
+            '@eslint-react/no-array-index-key': 'warn',
+            '@eslint-react/no-children-count': 'warn',
+            '@eslint-react/no-children-for-each': 'warn',
+            '@eslint-react/no-children-map': 'warn',
+            '@eslint-react/no-children-only': 'warn',
+            '@eslint-react/no-children-to-array': 'warn',
+            '@eslint-react/no-class-component': 'warn',
+            '@eslint-react/no-clone-element': 'warn',
+            '@eslint-react/no-context-provider': 'warn',
+            '@eslint-react/no-duplicate-key': 'warn',
+            '@eslint-react/no-forward-ref': 'warn',
+            '@eslint-react/no-leaked-conditional-rendering': 'warn',
+            '@eslint-react/no-missing-component-display-name': 'warn',
+            '@eslint-react/no-missing-context-display-name': 'warn',
+            '@eslint-react/no-missing-key': 'error',
+            '@eslint-react/no-nested-component-definitions': 'error',
+            '@eslint-react/no-nested-lazy-component-declarations': 'warn',
+            '@eslint-react/no-unnecessary-use-prefix': 'warn',
+            '@eslint-react/no-unstable-context-value': 'warn',
+            '@eslint-react/no-unstable-default-props': 'warn',
+            '@eslint-react/no-use-context': 'warn',
+            '@eslint-react/purity': 'warn',
+            '@eslint-react/refs': 'warn',
+            '@eslint-react/rules-of-hooks': 'warn',
+            '@eslint-react/set-state-in-effect': 'warn',
+            '@eslint-react/set-state-in-render': 'error',
+            '@eslint-react/static-components': 'warn',
+            '@eslint-react/unsupported-syntax': 'warn',
+            '@eslint-react/use-memo': 'warn',
+            '@eslint-react/use-state': 'warn',
+
+            '@eslint-react/jsx-no-children-prop': 'warn',
+            '@eslint-react/jsx-no-children-prop-with-children': 'warn',
+            '@eslint-react/jsx-no-comment-textnodes': 'warn',
+            '@eslint-react/jsx-no-key-after-spread': 'warn',
+            '@eslint-react/jsx-no-leaked-dollar': 'warn',
+            '@eslint-react/jsx-no-leaked-semicolon': 'warn',
+            '@eslint-react/jsx-no-namespace': 'warn',
+
+            '@eslint-react/rsc-function-definition': 'warn',
+
+            '@eslint-react/dom-no-dangerously-set-innerhtml': 'error',
+            '@eslint-react/dom-no-dangerously-set-innerhtml-with-children': 'warn',
+            '@eslint-react/dom-no-find-dom-node': 'warn',
+            '@eslint-react/dom-no-hydrate': 'warn',
+            '@eslint-react/dom-no-missing-iframe-sandbox': 'error',
+            '@eslint-react/dom-no-render': 'warn',
+            '@eslint-react/dom-no-render-return-value': 'warn',
+            '@eslint-react/dom-no-script-url': 'error',
+            '@eslint-react/dom-no-string-style-prop': 'warn',
+            '@eslint-react/dom-no-unknown-property': 'warn',
+            '@eslint-react/dom-no-unsafe-iframe-sandbox': 'error',
+            '@eslint-react/dom-no-unsafe-target-blank': 'warn',
+            '@eslint-react/dom-no-use-form-state': 'warn',
+            '@eslint-react/dom-no-void-elements-with-children': 'warn',
+
+            '@eslint-react/web-api-no-leaked-event-listener': 'warn',
+            '@eslint-react/web-api-no-leaked-fetch': 'warn',
+            '@eslint-react/web-api-no-leaked-interval': 'warn',
+            '@eslint-react/web-api-no-leaked-resize-observer': 'warn',
+            '@eslint-react/web-api-no-leaked-timeout': 'warn',
+
+            '@eslint-react/naming-convention-context-name': 'warn',
+            '@eslint-react/naming-convention-id-name': 'warn',
+            '@eslint-react/naming-convention-ref-name': 'warn',
+        },
+    },
+    {
+        files: ['**/*.{jsx,tsx}'],
+        extends: [reactRefresh.configs.vite],
+        rules: {
+            'max-lines-per-function': ['warn', { max: 120, skipBlankLines: true, skipComments: true }],
         },
     },
     {
         files: ['**/*.tsx'],
         rules: {
             '@typescript-eslint/explicit-function-return-type': 'off', // No need to explicitly type React components' return types
-            '@typescript-eslint/prefer-readonly-parameter-types': 'off', // No need to explicitly type readonly for React components' props
             '@typescript-eslint/strict-void-return': 'off', // Allow Promise-returning callbacks in React props
         },
     },
